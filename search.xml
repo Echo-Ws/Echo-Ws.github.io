@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Coming back to the blog]]></title>
+    <url>%2F2019%2F07%2F16%2Frelaunch%2F</url>
+    <content type="text"><![CDATA[Last semester I had 4 classes and really had no time to update my blog. Now in the summer break, I finally have time to summary. 时隔一个学期，要重启这个blog需要特别大的决心。因为现在发表个人观点的平台太多太多了。微博，知乎，简书，csdn，微信公众号等等。何必要费心费力，DIY一个丑丑的blog呢？diy的劣势： 需要自己维护，比如组件更新。 很多功能根据api来实现，更新接口会导致功能不可用 没有cdn 访问慢 可能面对恶意攻击（搭建在github上相对可以减轻一些） 说服自己的理由： 自己搭建blog，可以体验到站长的滋味。比如做seo，了解搜索结果的排名的原理。 在GitHub上建立blog能巩固GitHub 的使用技巧。 假期闲置在家刷题，有时间可以折腾兴趣爱好。]]></content>
+      <categories>
+        <category>杂记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Sorting Algorithm]]></title>
+    <url>%2F2018%2F12%2F12%2Falg%2F</url>
+    <content type="text"><![CDATA[Notes for sorting algorithm 插入排序 Insertion Sor从前建立有序数组，将unsorted 元素不断加入到前面 theta(n^2)最优 即对以排好序的数组为t heta（n） stable 冒泡排序 Bubble Sort每次比较相邻的两个数据，将大的移到右边。将有序的数组建立在数组的尾端。 theta(n^2)优化后的冒泡排序在面对排好序的数组的最优情况的是 theta(n) stable123456789101112public void bubbleSort(int arr[]) &#123; boolean swapped = true; for(int i = 0, len = arr.length; swapped &amp;&amp; i &lt; len - 1; i++) &#123; swapped = false; for(int j = 0; j &lt; len - i - 1; j++) &#123; if(arr[j + 1] &lt; arr[j]) &#123; swap(arr, j, j + 1); swapped = true; &#125; &#125; &#125;&#125; 选择排序 Selection sort/Maxsort每次选择unsorted array中最小的element, switch it with the 第一个未排序的元素。 比较次数theta(n^{2}) non-stable ex 5,5,2,4,1 select the smallest number 1, and then swap with the first number 5, we change the order. Merge sortMerge sort is a divide and conquer algorithm Worst-case performance O(n log n) Best-case performance O(n log n) typical, O(n) natural variant Average performance O(n log n) Worst-case space complexity О(n) total with O(n)auxiliary, O(1) auxiliary with linked lists[1] Quick sort选一个基点，把比他小的放一边，比他大的放一边 unstable: ex 1,2,3,4,5,5 select the last number as the spilt number.Worst-case performance O(n2)Best-case performance O(n log n) (simple partition)or O(n) (three-way partition and equal keys)Average performance O(n log n)Worst-case space complexity O(n) auxiliary (naive)O(log n) auxiliary (Sedgewick 1978)]]></content>
+      <categories>
+        <category>coding</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Minimum Add to Make Parentheses Valid]]></title>
+    <url>%2F2018%2F10%2F13%2FMinimumAddtoMakeParenthesesValid%2F</url>
+    <content type="text"><![CDATA[DescriptionGiven a string S of ‘(‘ and ‘)’ parentheses, we add the minimum number of parentheses ( ‘(‘ or ‘)’, and in any positions ) so that the resulting parentheses string is valid. Formally, a parentheses string is valid if and only if: It is the empty string, orIt can be written as AB (A concatenated with B), where A and B are valid strings, orIt can be written as (A), where A is a valid string.Given a parentheses string, return the minimum number of parentheses we must add to make the resulting string valid. ExampleInput: “()))((“Output: 4 My solution:31234567891011121314151617181920212223class Solution: def minAddToMakeValid(self, S): """ :type S: str :rtype: int """ if len(S)==0: return 0 count=0 deep=0 for x in S: if x=='(': deep+=1 else: if deep ==0: count+=1 else: deep -=1 return count+deep Tricky312345class Solution(object): def minAddToMakeValid(self, S): while '()' in S: S = S.replace('()', '') return len(S) Analysethe key is on the balance of parentheses.there are two cases: the number of ‘(‘, l, is more than ‘)’, r. r&gt;lIn the fist case, we need to record l and when meeting ‘)’ just subtract from l. When l become 0 or negative, it means we jump to the second case.In the second case, we can add the superfluous ‘）’ to the final result because it is impossible to get the corresponding ‘(‘. And when it meets ‘(‘,it jumps to case 1 again.]]></content>
+      <categories>
+        <category>coding</category>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>medium</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[RomanToInteger]]></title>
+    <url>%2F2018%2F10%2F08%2FRomantoInteger%2F</url>
+    <content type="text"><![CDATA[DescriptionGiven a roman numeral, convert it to an integer. Input is guaranteed to be within the range from 1 to 3999. detail My123456789101112131415161718192021222324252627282930class Solution: def romanToInt(self, s): """ :type s: str :rtype: int """ dic = &#123;'I':1,'V':5,'X': 10,'L':50,'C':100,'D':500,'M':1000&#125; pre = 0 result=0 for i in range(len(s)): if not pre: pre = dic[s[i]] continue if dic[s[i]]&lt;= pre: result += pre pre = dic[s[i]] else: result= result+dic[s[i]]-pre pre =0 result+=pre return result def test(self): print(self.romanToInt("IV")) print(self.romanToInt("I")) print(self.romanToInt("MCMXCIV")) Best1234567d = &#123;'M':1000, 'D':500, 'C':100, 'L':50, 'X':10, 'V':5, 'I':1&#125;def romanToInt(self, s): res, p = 0, 'I' for c in s[::-1]: res, p = res - d[c] if d[c] &lt; d[p] else res + d[c], c return res Analyse倒序的优势在于我们可以直接判定是加还是减当前的数，而不需要在多读后面的数来判断。]]></content>
+      <categories>
+        <category>coding</category>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ReverseInteger]]></title>
+    <url>%2F2018%2F10%2F01%2FReverseInteger%2F</url>
+    <content type="text"><![CDATA[DescriptionGiven a 32-bit signed integer, reverse digits of an integer.Note:Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−2^31, 2^31 − 1]. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows. ExampleInput: 120Output: 21 boudaryinput:7463847412 output:2147483647input:8463847412 output:0input:-8463847412 output:-2147483648input:-9463847412 output:0 my solution:3123456789101112131415161718192021222324252627282930313233343536373839404142434445464748# 80ms use 1hour 30mindef reverse(self, x): """ :type x: int :rtype: int """ # 2^31 Max = [2,1,4,7,4,8,3,6,4,8] if x&lt;0: a=-1 else: a=1 Max[-1] -=1 x= a*x result = [] num=0 # to remove the 0 in the in end of input indicator = True while x&gt;0: if indicator and x%10 == 0: x = x//10 continue else: indicator =False result.append(x % 10) x = x//10 num +=1 if len(Max)&lt; num: return 0 if len(Max) == num: for i in range(num): if Max[i]&gt; result[i]: break if Max[i]== result[i]: continue return 0 output=0 for i in range(num): output += result[i]*(10**(num-1)) num -=1 return output*a Best312345678# 48 msdef reverse(self, x): """ :type x: int :rtype: int """ x = int(str(x)[::-1]) if x &gt;= 0 else - int(str(-x)[::-1]) return x if x &lt; 2147483648 and x &gt;= -2147483648 else 0 Analyse对 string 与int 之间的转换不熟悉，对切片操作不熟悉，导致用了大量的计算来造轮子。时间上用计算好的数据来替代会节约运行时间。]]></content>
+      <categories>
+        <category>coding</category>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Jupyter]]></title>
+    <url>%2F2018%2F10%2F01%2Fjupyter%2F</url>
+    <content type="text"><![CDATA[record some skills using jupyter. debugging way :312from IPython.core.debugger import set_traceset_trace() n :execute and go to the next line c :continue the program h: overview of the commands s: step in the functionn. del、remove、pop difference cmp do not include in python3 (a, b)[x&gt;y] if x&gt;y is true then return b,else return a.]]></content>
+      <categories>
+        <category>coding</category>
+      </categories>
+      <tags>
+        <tag>tips</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[TwoSum]]></title>
+    <url>%2F2018%2F09%2F18%2FTwoSum%2F</url>
+    <content type="text"><![CDATA[descriptionGiven an array of integers, return indices of the two numbers such that they add up to a specific target. You may assume that each input would have exactly one solution, and you may not use the same element twice.Example: Given nums = [2, 7, 11, 15], target = 9, Because nums[0] + nums[1] = 2 + 7 = 9,return [0, 1]. analysisan array of integers 意味着无序，正负都有可能。无法通过比较target与num的数之间大小关系来减少遍历数。没有多余的限制条件，故第一反应是暴力搜索Brute Force：123456789def twoSum(nums, target): for i in range(len(nums)): # 没有说明正负 故下面错误 # if target&gt;0 &amp; target&lt; nums[i]: # continue for j in range(i+1, len(nums)): if target == (nums[i]+nums[j]): return [i, j] submit：exceed time limitation when the array is large时间复杂度 n^2空间复杂度 1超时，考虑用空间换时间。此处涉及知识点 hash表 当选取一个好的哈希函数时，从哈希表中查询数据的时间代价可以视为1. When a collision occurreds, a look up can degenerate to O(n) time.通过查找元素是否在哈希表中来减少时间。 code12345678def twoSum(nums, target): storage = &#123;&#125; for i in range( len(nums)): if nums[i] not in storage: storage[ target- nums[i]] = i else: return [storage[nums[i]], i]]]></content>
+      <categories>
+        <category>coding</category>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>easy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Install official ROM and Google Playstore]]></title>
+    <url>%2F2018%2F09%2F04%2FGoogleframework%2F</url>
+    <content type="text"><![CDATA[刷谷歌框架参考:努比亚z17安装谷歌框架 刷入第三方Recovery: TWRP绯色玻璃最新版的工具包里没有root，故网上找 时代的导航者 做的twrp。 进入设置-关于手机-版本号，对着版本号这里连点5下，进入开发者模式并打开USB调试。 打开对应的bat文件完成twrp安装。 此时在BootLoader界面，手动按音量下选择Reboot to recovery mode进入recovery。 在工具箱找到root，root完重启。 刷机，与参考类似安装re文件管理器，备份/system/app目录下的WebViewGoogle。到 Open Gapps 选择arm64，Android 7.1。后一个包看需求选。但笔者在选pico包 后出现 安装任何app都显示“此应用与您的所有设备都不兼容 ”。故最后选择的是micro。将下载好的压缩包放入手机。关机 摁住上音量键/ 通过bat 进入recover模式 选择安装，找到方才保存的包即可。安装完ROM后重启。通过re文件浏览器将WebViewGoogle复原。 进入设置-高级设置-恢复出厂设置后即可使用Google play。 使用中遇到的问题 root完成上述步骤后手贱想root，结果再次登入Google play 需要重新验证账号，点击无反应。尝试设置 账户 中删除Google账号 提示管理员禁止删除该账号 放弃。只能再次恢复出厂设置。 也试过先root后再登入Google账号，Google play 闪退。装上re文件浏览器 检查webviewgoogle的确还原了 无解。 验证身份使用一段时间后出现“需要验证身份，您需要登陆自己的google账号”。 使用电脑登陆自己的Google账号，在最近的设备中将权限删除，等待手机的Googleplay提示重新输入密码验证账号即可。还可以再出现该提示信息的时候断网，恢复联网后提示消失。 无法下载软件无法在谷歌商店中更新或是下载任何软件。重启后第一次打开谷歌商店可以下载，之后则不行。试过清除缓存或重登账号无解。 谷歌框架自带的电话app再查看童话记录时闪退。无解。考虑换一个app查看通话记录。 考虑换官方国际ROM，客服的说法是Z17没有在国际发售故没有出国际版的ROM]]></content>
+      <categories>
+        <category>杂记</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Laptop chooice]]></title>
+    <url>%2F2018%2F07%2F04%2Fcomputer%2F</url>
+    <content type="text"><![CDATA[Choose a new equipment for graduate life. 需求随身携带：便携上课用来看pdf，做笔记。编程需求，刷图书馆。 候选Mac book pro软件兼容性 由于统一的硬件使得配置简易，没有繁复的驱动问题。统一的包管理，类似Ubuntu的环境，安装管理简易。 关于电池介绍Practical Tips For Taking Care of Your Mac’s Battery 所有的电池都有寿命，充放次数有限。低于50%充电算一次cycle，高于50算半次。连着电源使用与否对于电池一体化的mac来讲没有差异。 高压适配器可以给低压的电脑充电，即向下兼容。电压只是相当于流速，影响的是充电速度。 mac os 使用内存的策略是直到内存不够才关闭软件，使用大内存允许你一直挂着程序，切换更加迅速。且可以开虚拟机，运行Windows的软件。 港版 HK$15,888 美 \$1,999.00 817查： $2079 16g+512 solo耳机 即￥14533 黑五：一般官网不会有折扣，即无法自定义配置。 港中文13寸 512G: HK $ 13,988 送7 in1 扩展坞 保护盒 实际￥12253 HUAWEI Matebook E送外设，续航略短于surface，可用充电宝充电。 Surface pro5外设配件贵。 HUAWEI Matebook x peo91%的屏占比 3：2的屏幕规格 3k分辨率120的开合角度，使触控屏显得鸡肋。没有大于180的开合的触控都没有太大的实用价值。不支持触控笔。有usb-a 雷霆3 usb-cmbp全雷霆3过于超前，一个usb-a还是实用不少，毕竟目前手头设备全是usb-a。 Thinkpad T480s比t480 轻，没有双盘位。 其余windows下的超极本：DELL的XPS，lg Gram 都值得考虑。 MBP 2018 with touch bar 512G +16G RAM 使用感受：全系统统一快捷键，记一套即可高效在各种软件中使用，提高工作效率。touch pad 的手势可以完全抛弃鼠标，间接让我放弃了外接键盘。真正做到了一台laptop的任务。windows下高自由度的软件导致各家各有一套快捷建，需要消耗大量精力。以及触控板的不给力使得不带一个鼠标就无法正常工作。遗憾的是 mac上的键盘布局需要一定的时间来适应，无法迁移windows下积累的习惯。 bug使用第一周 死机两次。检查log，一次由于自带的preview引起，一次是由于快帆vpn引起。touch bar 两次黑屏无反应。一次合盖后重新唤醒，一次重启解决。 使用第三周，大概一周没有关机，出现快捷键的冲突，cheatsheet 会在切软件后出现，并且导致command q 失效。重启解决。 2018-10-02 死机重启。在使用alfred]]></content>
+      <categories>
+        <category>杂记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[阅读计划]]></title>
+    <url>%2F2018%2F06%2F19%2Fprepare%2F</url>
+    <content type="text"><![CDATA[Make a plan 编程之美面试题，难度比剑指offer 难一点cpu 占有率，需要结合windows的API，属于比较细节的知识点。]]></content>
+      <categories>
+        <category>reading</category>
+      </categories>
+      <tags>
+        <tag>reading</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[搞机记录]]></title>
+    <url>%2F2018%2F06%2F04%2Ffix%2F</url>
+    <content type="text"><![CDATA[computer science = 修电脑 问题描述 Haier 系列笔记本，xp系统。每次开机做硬盘检查，且会检查到未知的新硬件，不久会自动卡死蓝屏。听声音感觉硬盘卡碟严重，然而使用安全模式不会自动重启，硬盘访问正常，可以排除硬件问题。据使用者描述曾删除c盘文件，先重装电脑排除软件原因。 装机记录 使用UltraISO制作的u盘启动装ghost系统，出现Error:cannot load file (code:5555h):\boot\AUTO.ini建议使用DiskGenius重建MBR引导，无效。 进入winpe，出现could not find ntldr 问题可能出在ghost系统或者ultraiso上。 从官网下载iso，用ultraiso写入，出现INF file txtsetup.sif is corrupt or missing,status 18解决方法看youtube这个视频具体说将txtsetup.sif从i386文件夹中复制到上级目录里，即和i386同级。将i386改名为 $WIN_NT$.~BT即可解决。 安装的时候出现了：请将光盘放在光驱中。无解放弃。 建议使用WinSetupFromUSB制作u盘。 官网下载WinSetupFromUSB皆显示无资源。无奈从第三方下载：1.8汉化版，在写入镜像时出现error，不知道代码无法解决。在csdn上找到1.7，写入时巨慢。成功启动且进入装机界面，在安装的时候出现复制错误，找不到文件，怀疑自己的u盘 有问题，换16g的 新u盘重新做。然而无法分出新区安装ntldr。解决方法1 diskgenu备份旧u的隐藏分区，在克隆的新u。2将旧电脑硬盘拿下来单独装系统。等读卡器拿回来在尝试。 用windows7 usb dvd工具出现过irq less or qualmemory management且有时可以开机有时不行，怀疑是硬件问题，但是不知道是内存还是硬盘还是主板。尝试换装win10 全部在写入的时候出错，怀疑内存或硬盘出错。 将机子的硬盘装在本人的笔记本，成功安装win10，排除硬盘问题。然而win10的引导项目不是直接装在硬盘里，好像装在了主板上？导致我换回原来的硬盘时出现了新的引导项。将硬盘装回旧机，引导项目丢失，期望通过u盘修复，然而无法进入U盘，显示有错误，怀疑其他硬件的问题导致。然而没有ddr2的内存测试，无法确定出错的硬件。 家里还有一台闲置的FUJITSU S2110，之前还原了原版英文系统。需要安装中文版 将下载好的xp86 解压到U盘里，直接在系统里打开，安装，成功。证明下载文件没有问题。安装了一个纯净系统，需要自己装驱动。fujitsu 官方驱动下载地址 备份旧电脑数据方案：1.局域网互传，需要两台电脑同时开启。win10设共享文件夹，xp访问将数据拷贝进去，速度约1.2mB/s。没有深究瓶颈。2.硬盘拷贝。3t移动硬盘 GPT分区，32位xp上无法识别，需使用MBR分区表。在MBR分区表中，一个分区最大的容量为2T，且每个分区的起始柱面必须在这个disk的前2T内。 对分区没有什么特别的想法，但已经拷了近300G的数据，不想在此格式化。使用旧的硬盘进行数据的迁移。关于GPT和MBR的科普 相片管理参考:如何高效地整理照片及管理照片？ - 赵晗的回答 - 知乎选择 Lightroom 5.7, 注册码1160-4102-9128-2011-2993-5806 注:断网操作主要使用功能：关键词标注]]></content>
+      <categories>
+        <category>维修</category>
+      </categories>
+      <tags>
+        <tag>xp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[留美调研]]></title>
+    <url>%2F2018%2F05%2F28%2Fstudyabroad%2F</url>
+    <content type="text"><![CDATA[申请 offer比较： 成本 就业 课程 生活 美国实习条件 美国生活 UTD 调研 签证 租房 机票 驾照 注册 pre arrival module BU 注册 通信 物质准备 申请 专业选择： computer science 申请学校： 校名 rank Uiuc 5 Rice 20 Usc 16 Ucd 31 Neu 42 Bu 42 Utd 58 rank from USNEWS 2017排名可以参考：QS、泰晤士高等教育、上交大世界大学学术排名、以及USNEWS自己的世界大学排名。了解他们的评价标准，选择你最认可的排名评价标准的那份排名作为参考。 思路：尽可能地覆盖各个排名区间地学校。 收到offer：Bu met；UTD analysis: 标准测试考的慢及不理想限制了选校地范围 本科 software engineering 偏向工程应用，在申请computer science 时不具有优势。所以被Bu的Arts and Sciences项目拒，调剂到了就业向的Met。 没有研究向的成果。参与的项目也是工程导向。如果选择GAP ，可以提高标准化测试，理想情况能收获小公司的实习。然而依旧是工程导向，对申请CS帮助不大。 参考名校录取流程 offer比较：由于存在复杂的利益关系，完全通过网上的评价来比较学校是不明智的。客观的数据更能说明问题。一个科学的选校，应当综合排名、就业与薪水、学校声誉、教学质量、研究实力、课程设置、地理位置等多方面来考虑。应当更多的注重数据的使用，而不是单凭某一句模棱两可、似对非对的评价语来做判断。应当多多注意挖掘学校官网，看课程设置、看实验设备、看导师、看论文发表等等。利用有效的数据外加官网挖掘，你自己就可以科学的选校，比之泛泛几句不知从何而来人云亦云的评价要科学不知多少倍！ 成本BU\$26,408 per semester 18学分Admissions Application FeesGraduate: \$85Student Services FeesGraduate: \$166 per semesterTechnology Fee: \$60 per credit hour (online courses)Student Health &amp; Wellness Fee: $212 per semester 一个学期：26480+166+212=26789生活费 一个月$2000 BU官网估计fall+spring $76,758毕业： 10门课 – 3+3+4 3个学期 估计 （85+27000 3 + 2000 18）*6.6=736,4892年的话 98万 UTD 官网估计每学期3门课，两年学费$25452 生活费 $16034 医疗保险$2335 总计$43824 = ￥264696 BU将近UTD 3倍 就业BU专业排名 42 综合排名30UTD专排 58 综合排名100+国内名气而言，波士顿大学远胜utd。其次在学位认证上不会出现学院信息（待考证）德克萨斯大学达拉斯分校综排低，最关键的是这类公立大学是必需要为各自所在州的公民服务的，招的州内学生必然多，分数线对州内学生就会很低。而USNEWS的综合排名参考的指标包括SAT/ACT入学分数、师生比、毕业率等等一堆，公立大学必然是要吃亏的。但这些指标都是本科的，并不能说明德克萨斯大学达拉斯分校实力不行。 实习机会utd internshiputd有一年两次的Industrial Practice Programs BU主要在晚上上课，可以在白天刷题或者实习。 还可以蹭课。而去UTD经济条件宽松一些，生活质量较高。 从网上调查看，工作都是靠刷题，学校的影响微乎其微。学校能对你提供最大的帮助，大概是校友资源，如师兄内推。 课程BU完成核心课 及一个方向的课学过的课程可以申请课程豁免，具体咨询cs部门。 可以参加一次指导性研究，即有老师指导的研究。 gpa&gt;3.7,且完成了至少7门课可以选择写硕士论文。 完成6门课后或完成一年的学习，可以申请有学分的实习。项目需要自己找。找到一个负责的教授定期向其汇报。实习条件：完成6门课后或完成一年的学习满足ISSO的要求？gpa&gt;3.0有offerYou must register for CS 506 Internship in Computer Science during the semester or summersession for which the CPT will be authorized to take place. 可以在暑校完成实习 可以选择本科生的课程，帆船滑雪等对我很有吸引力。 UTD33 semester credit hours minimum。选择毕业论文可以当6学分。一门课3学分，即11门课。 核心课程 5门 注册UTDFor questions about International Student Orientation or the items on the checklist, email ICPrograms@utdallas.edu. 选择orientation 两天的orientation day1： held in ATC Lecture hall 入场 8：15-8：45 带passport and certificate of completion from ore arrival module 2: held in student service addition SSA 9开始 campus tour every hour 早点注册可以TB test , register for classes, 参加活动 731第一场 有字幕 i-94 print in englih isso电话 9728834189紧急打给警察局电话 9728832222 clear onhold 来选课 pre arrival module ：4 partoveriewtravel guideclass registration &amp; campus lifehealth &amp; financial resource BUcalendarFebruary 20 Class Schedule AvailableFebruary 20 Registration Planner AvailableApril 8 Registration Begins for Select GroupsSeptember 4 Classes BeginSeptember 17 Last Day to Add Standard CoursesOfficial Registration Deadline for MET StudentsLast Day for Undergraduate Students to Change Standard Courses from Credit to Audit Status 生活德州设施新，天气热，气候接近广州。蚊虫多。地大。波士顿冬天冷，靠近海边，受到飓风影响大。可以说是生活在农村和城市之间的区别。 明确目标：在美国找到工作，顺利留下来。起码把学费赚回。 最关键的问题是学历对工作的影响，如果你有拿出手的成果，自然不需要学历为你撑腰。你需要有能够证明自己的东西。 选择BU意味着在工程这条路上走到黑了。而UTD则有一丝读博的机会。毕竟大一的我是肯定不会选择读研的。选择哪所学校，本质上是在问我：真的下定决心放弃科研了吗？放弃攀向人类的智力巅峰了吗？ 其次，在UTD也有优秀的校友资源，还能提供丰富的实习机会。UTD和BU的差别只剩下，BU在国内相对出名。也就是高价买面子。 校友圈boston 竞争大 和名校的人竞争。 参考：一亩三分地 Bu met live in boston 美国实习条件 CPT签证(Curricular Practical Training)允许学生在校外合法打工的一个许可，且工作领域必须和学习专业相关具体条件与学校项目有关 OPT签证(Optional Practical Training)用于毕业后使用，即美国留学毕业后的一种过渡签证。在美国高等院校毕业拿到本科学士学位以上的学生，可以在毕业后的一年内，学生有工作许可（申请OPT拿到移民局发放的EAD，Employment Authorization Document）可以在相关专业领域寻找工作实习单位。STEM专业领域内的毕业生。除了标准12个月的OPT外，STEM学生将直接享有额外24个月的就业实习机会。 美国生活留美体验 准备根据致UTD的新生们，按紧迫程度整理出自己需要解决的问题。 签证需要I20 和DS160。I20来源于学校，一般会有邮件指引。DS160，全称美国非移民签证申请表，在美国大使馆官网在线填写。tips：Passport book number（护照本编号） 在护照个人信息页右边竖向写的数字Passport/Travel Document Number护照/旅行证件号码 指的是个人信息页右上的号码。需要填写在美国的住址，确认好在填写参考：DS-160表的填写流程 在面谈时携带下列材料： 表明在经济、社会、家庭等各方面具有牢固约束力的文件，证明您在完成美国的学业后会如期回国。您认为可以作为申请支持材料的资金证明和任何其他文件：证明您有充足的资金支付第一学年的所有开销，并且能够为在美停留期间的所有剩余开销找到足够的资金来源。M-1签证申请人必须证明其有能力支付在美停留期间的所有学费和生活费。我们不接受银行对账单的影印本，除非您能同时出示银行对账单原件或银行存折原件。如果您有资助人，请携带您与资助人的关系证明（例如您的出生证明），资助人最近的纳税申报表原件、银行存折和/或定期存款证明。能够证明学术准备情况的学术性文件： 带有评分/评级的学校成绩单（最好使用原件）、公共考试证书（A-levels等）、标准化考试分数（SAT、TOEFL等）以及毕业文凭。赴美研究/学习计划及相关的详细信息，其中包括美国学校的导师和/或系主任的姓名及电子邮箱地址。请点击此处获取研究/学习计划范本。一份详细介绍以往学术和专业经验的简历 (英语版)，其中包括投过稿的出版物完整清单。请点击此处获取简历范本。美国学校或项目提供的I-20签名原件（针对返签学生）。导师的个人简介、简历或打印网页（针对所在美国教育机构已为其指定导师的研究生）。check list：签证照片：最近六个月内拍摄的2英寸x2英寸（5.1厘米x5.1厘米）照片 相关要求 资产证明简历 resume curriculum vitaetoefl gre成绩单transcriptstudy plands160 i20offer户口本 household registersevis缴费证明 Payment certificate签证预约确认页 租房utd：校内的房间通常要比校外的贵一些，一般在700刀左右吧（房租，水电网的等全算在内的话）。校外的话，可以将价格控制在500刀左右。另外，校内的住房也是非常的有限的，一般要提前一个学期（三四个月）左右才能比较稳妥的分到房间。出于体验的目的，计划一年学校一年在外租房。第一年要适应的东西比较多，租房暂缓。 学校公寓信息：http://www.utdallas.edu/housing/研究生：University Village 配置： Refrigerator/freezer with ice maker Dishwasher Electric stove/oven Garbage disposal Microwave Wireless internet available throughout the community IPTV (streaming television) Plush carpeting Mini blinds Washer/dryer Central heat/air conditioning Vinyl floors (kitchen/bathroom) 没床 价格在$3200左右两个学期Canyon Creek Heights 有床，$4000左右To cancel your application you must contact our office via email at reslife@utdallas.edu. 在外租房对于校外的住房，你可以查找 http://www.cometian.com ，Google Maps, Craigslist - https://dallas.craigslist.org/ , 和网上的社区比如QQ, Wechat, Whatsapp, Facebook的Housing of UTD等等。 Note: 当下美国最大的房屋买卖和出租信息的在线网络是 Zillow - http://www.zillow.com/但是大多数的当地人还是更喜欢Craigslist– https://dallas.craigslist.org/ - 因为craigslist是一个未上市的公司，提供的是比较务实的非商业化的当地信息。 road warriors 支持utdallas.edu/roadwarriors www.utdallas.edu/icp/housing/ BUBU real estate ROOM a twin bed, dresser, desk, chair, and lampSTUDIO 有独立厨房和浴室剩下两个更高级不用看。 只能现场租，不保险要么提前去，短租别人的公寓，去学校看房 580 Commonwealth Avenue可以网上租，但是没家具，没有room 校内公寓中介半小时BU 980 确定留学目标，房子的等级与目标相契合。1400/mon 能看到美景，在mit内，距离学校骑车10min 走路30min 算是与local住，生活上能得到比较大的帮助。500左右，malden 地铁1小时 最后定在dexter park 850厅175 freeman St 包水 热 燃气 175 Freeman St., #604, Brookline, MA（Massachusetts）离学校近是最大的优势。需要自己隔断。 安全押金：1000 房东退还的时候需附利息。 硬板床：宜家搜Slatted mattress base + 在Homedepot买木板。床架装起来麻烦费时。 机票utdCheapest non-stop flights from China &amp; Asia to Dallas. 接机：the Friendship Association of Chinese Students and Scholars(FACSS) of UTD (www.utdfacss.com , www.utdbaike.com ),组织都提供给新生接机服务和临时住处。官网utdbighowdy.com 机场两个 1 DAL DFW 交通dallas area rapid transit DART BU机票科普 明确自己是想要价钱的优惠还是时间的优惠。因为并不一定可以订到时间和价钱都很有性价比的机票，所以决定好自己就是要便宜机票，还是要更好的服务享受 转机注意: 签证问题：英语母语国家如美国、英国、加拿大、澳大利亚、新西兰必须要有签证。不出机场也不行。 转机时间问题： 联程票是否是同一家航空公司 两个航班是否在同一航站楼 国内、国际转机的时间流程差别 需不需要入关 关于转机有一个 Minimum Connecting Time (MCT) 的概念，国际航空运输协会 (International Air Transport Association，IATA) 有自己的数据库，统计了航班的转机时间。航空公司的联程票都是符合 MCT 要求的，因此可以直接购买联程票，或者在买分段票的时候，通过查看其他联程机票的转机时间判断自己转机时间是否足够。 长时间过夜：有的时候转机时间非常长的话可能需要过夜，需要确认机场能否过夜，如果不能过夜必须出机场还得考虑签证问题。 机票延误：如果是联程票，由于航空公司的愿意造成的延误，航空公司会免费进行签转。如果下一班 available flight 需要过夜，有些航空公司也会免费处理你的住宿问题及签证手续（如果需要的话）。 退票改签对于所有的机票，都是可以退票的。任何机票在购买日起一年内都是有效的，可以进行退款。即使无法退票款，机建燃油和建设税都是可以退票的。如果通过第三方代理购买的票显示不能退改，那就是被代理坑了，换一家店铺购买。建议尽量找航空公司直销，以及，改签直拨航空公司电话，解释是别人帮你买的票，一般都可以解决。注意：对于特价票，也就是低舱位的票，在购买之前的协议里都是写清楚退票仅退燃油机建费用的，因此购买前考虑清楚。 通信google voice华为荣耀v9支持频段2G：GSM 850/900/1800/1900 3G：CDMA EVDO 800 3G：WCDMA B1/2/5/8 3G：TD-SCDMA B34/39 4G：TD-LTE B38/39/40/41 4G：FDD-LTE B1/3/5 机场有wifi 可以打电话漫游 华为天际通？中国电信美洲公司 依托tmobile 信号取决于所在地。cricket family plan1、在线购买首先可以到各大手机运营商的官方网站：VERIZON品牌：www.verizonwireless.comAT&amp;T品牌：www.att.com （这个也就是原来的CINGULAR品牌 www.cingular.com）TMOBILE品牌：www.t-mobile.comSPRINT品牌：www. sprint.com2、可以到比较知名的购物网站：LETSTALK：www.letstalk.com亚马逊：www.amazon.com沃尔玛：www.walmart.com易趣网：www.ebay.com新蛋网：www.newegg.com在线购买需要你的信用卡，而办理美国银行卡需要SSN（社会保险号），所以采用这种方式买手机而没有信用卡的朋友，可以让美国的朋友代买。3、到当地的网点或者商店购买相信对于大多说没有车的朋友来说，还是比较头痛的吧。当然签合同的时候有时也会要你的SSN（社会保险号），有时只要学生证就可以了，各地状况不同。 外汇年度总额为每人每年等值5万美元超年度总额的经常项目购汇，凭有交易金额的真实性证明材料办理。了解如何在app上买 BU了解各项事项的截止日期。 疫苗广州体检 办理健康证明书体检人员需带护照或身份证原件及复印件一份、免冠大一吋彩色近照三张。如需签发国外体检和预防接种表格者，前来体检和预防接种时应将表格一并带来。 对经批准出国留学1年以上的中国公民须凭护照、有效签证和境外学校出具的录取通知书等证明文件实施免费传染病监测体检 本中心只在中心总部办理中国国内公民出入境体检与预防接种业务，珠江新城赴美移民体检中心一律不予办理。 一般检查项目（身高、体重、血压、脉搏、体温筛查）、内科、外科、五官科、胸部X线检查、心电图、超声检查和实验室检查项目（艾滋病检测、梅毒检测、乙型肝炎表面抗原、丙型肝炎抗体、肝功能（ALT或GPT）、血型、血常规） 学费官网9月17日之前，按学期付款。逾期要收滞纳金。 TUITION 26,408.00STUDENT SERVICES FEE 166.00HEALTH &amp; WELLNESS FEE 212.00 缴费方式：通过美国银行账户进行转账邮寄支票网上平台firewire支付 $27000 ￥187,846 按汇率算 27000*6.842=184,755 医疗保险9月20前可以waive 在moeny选项卡操作替代品 bu指引：国际生waive 条件：enrolled in a government-sponsored plan or an ACA-compliant plan based in the US 医疗保险术语 Aetna networkhealth center 可免除学生的自付额和免赔额 选课 体育：AQ100-399 = AquaticsDA100-499 = DanceER100-499 = Emergency ResponseFT100-399 = FitnessGS100-399 = General SportsHE100-299 = Health EducationMA100-299 = Martial ArtsMB100-299 = Mind/BodyNT100-199 = NutritionOE100-299 = Outdoor EducationPE100-399 = Physical EducationSK100-399 = SkatingWF100-299 = Waterfront Boating Swim TestJump or dive into the water and swim 3 body lengths underwaterContinue swimming 100 yards (4 lengths of the pool)demonstrating rhythmic breathing (front crawl or breast stroke)Tread water for 2 minutesFloat on stomach for 1 minute without kicking(turning head to breathe)]]></content>
+      <categories>
+        <category>杂记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[搭建NAS]]></title>
+    <url>%2F2018%2F05%2F26%2FNAS%2F</url>
+    <content type="text"><![CDATA[一直想搭建私有云。可是手头既没有闲置的设备也没有相关技术积累，所以一直停留在想法阶段。特开一文督促自己。 需求 数据备份。一台神舟陪了我四年，不知道还能陪我多久，没有数据备份就好比船上没有救生艇。 存储需求。主力本的1T存储即将用完，需要数据仓库。 多终端同步文件。手机端和电脑端没有合适的同步工具。 方案 基本思路 典型产品 特点 云端存储 彻底抛弃本地文件，一切都保存在云端，使用浏览器访问 谷歌云端硬盘 网络依赖强 本地同步 端到端同步 微软Live mesh 无需服务器，局域网内速度较快，无版本管理，要求两端同时在线，使用场景受限，目前己淘汰 本地与云端混合同步 本地到云端，以云为中介再同步到本地 Dropbox 增量备份，版本管理，冲突识别，文件共享，支持第三方扩展·很好地克服了两络连接差带来的困扰，整体可靠 其中，Dropbox理想，但免费用户空间有限、国内普通用户无法稳定访问。 解决方案商业上已有不同量级的解决方案：个人向：300-500 路由器，玩客云，各种魔盒家庭企业向：群晖 1000+ 出于cs学生的自我要求，计划从黑群晖入手，DIY。 问题 黑群晖。一台戴尔父母做上网机，能否改成黑群晖后仍保留浏览器功能？ 计网基础。千兆网络和传输速度的关系。交换机。 进度18-05-25： 618预热，JD硬盘秒杀比平时便宜20，用慢慢买查询的确属一年中最低价，也许618还会有券便宜一些，但是不想花太多精力在抢券上，便决心剁手，迈出了第一NAS步。秒杀产品有： 希捷(SEAGATE)酷鱼系列 3TB 7200转64M SATA3 台式机机械硬盘 ￥489 东芝(TOSHIBA)P300系列 3TB 7200转64M SATA3 台式机硬盘(HDWD130) ￥499 在张大妈和度娘上看了一圈，希捷酷鱼系列的名声着实不好，不排除竞争对手的恶意抹黑，但对于小白来说，没有技术和精力深入研究，决定试水东芝。 由于手头没有台式机，且没有确定NAS方案是路由器还是台式机,决定入手硬盘盒。硬盘盒的质量决定了硬盘的寿命，在选取的时候着实头疼。硬盘盒关键在于芯片和电源。小白只能通过网上的口碑和是否带电源两点来选取。信息源：盒子的故事 口碑优秀：元谷的存储巴士；世特力。价格100+， 安全保障，占的空间大。考虑到本次试水行为，成本不足，且未来不确定性极大，此类产品不便携。 百元以内如战国，各家产品层次不齐。一般分为 需要螺丝的传统盒子 热拔插的盒子，分为立式和卧式。 易驱线 品牌上有： ORICO， 一直被网上黑。 Yottamaster 官网的界面居然是ORICO！他们是一家还是网址被重定向了。网上也没有查到他们是一家，突然觉得水好深。 飚王ssk。网上讨论不多，价格相对前两家高 出于懒癌以及想一个盒子同时用于2.5寸和3.5寸的硬盘，最后选取了立式硬盘盒子，Orico和Yottamaster两个外观相近，价钱都是69。由于Orico卖家送硬盘保护套，就入了。 电子产品如买彩票，研究的多不如运气好。研究一个下午也只能是了解品牌的程度。 2018-05-27技术调研局域内网速度的瓶颈在于各个设备的网卡限制。本机无线网卡上限100Mb路由器上限300Mb理论上内网互传为12.5MB/s 假设电影大小：2GB 播放时间：120min2GB=2*1024*10248Kb=167777216kb120MIN=120\60S=7200s所需要网速=2GB/120min=2330kb/s=291KB/s 黑群晖教程 反思如何选取商品小白没有技术知识，很难从产品本身来决定。我一般从以下维度判断： 产品的各项参数，前提是商家信誉有保障不会参数造假，或者卖家不会偷换零件，所以一般选择JD。了解不同的参数代表的使用体验，选取符合自己需求的参数组合。 历史购买者的评价，风险在于：商家刷单好评，或者竞争者恶意攻击，造成信息污染，难以过滤出真正的使用者心得。一般选取相关论坛的开箱测评，注意测评者的相关利益。以及朋友使用的经验。在14年神舟口碑不佳的时候，是朋友的建议让我坚定了上船的决心。 在面对纠结的产品。列出相应优缺点。然而不能保证信息源可信。]]></content>
+      <categories>
+        <category>杂记</category>
+      </categories>
+      <tags>
+        <tag>开坑</tag>
+        <tag>NAS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Record for Ubuntu]]></title>
+    <url>%2F2018%2F05%2F17%2FUbuntu%2F</url>
+    <content type="text"><![CDATA[我的ubuntu 16.04使用记录，以备未来重装电脑。 DetailsIntel® Core™ i7-4710MQ CPU @ 2.50GHz × 8GeForce GTX 860M/PCIe/SSE2 装机记录 制作引导盘 UltraISO做启动U盘时的选项： 刻录校验：打上对号 写入方式：USB-ZIP+ 便捷启动：写入新的硬盘主引导记录（MBR）-USB-ZIP+ 设置完毕后，单击“写入” 参考：百度经验 更换软件源 显卡驱动 已经安装了nvidia361: 1234sudo apt purge nvidia-361sudo apt-add-repository ppa:graphics-drivers/ppa -ysudo apt updatesudo apt install nvidia-364 如果还没安装nvidia驱动直接 12sudo add-apt-repository ppa:graphics-drivers/ppasudo apt update 从nvida官网查询对应显卡对应的驱动 替代命令中的版本号 1sudo apt install nvidia-364 nvidia-settings nvidia-prime 解决依赖问题 1sudo apt-get -f install 参考： 登陆界面无限重启 Ubuntu 16.04 安装英伟达（Nvidia）显卡驱动 自动挂载硬盘 software Download tool: uget+aria2 12sudo apt-get install ugetsudo apt-get install aria2 pip 1sudo apt-get install python-pip pip 速度慢： 创建 /home/scuter/.pip/pip.conf 写入： 123[global]trusted-host = mirrors.aliyun.comindex-url = http://mirrors.aliyun.com/pypi/simple apt用法 美化 注意 Ubuntu tweak在16.04已经不适用！！！用Unity Tweak tool替代 Chrome 12wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.debsudo dpkg -i google-chrome-stable_current_amd64.deb jupyter (使用python2和3的内核) 12345python2 -m pip install ipykernel python2 -m ipykernel install --user python3 -m pip install ipykernel python3 -m ipykernel install --user mongodb 显示系统状态：System Load Indicator windows ubuntu 双系统共享蓝牙设备 显示温度：如何在 Ubuntu 中检查笔记本 CPU 的温度 java 图形化界面的vim1sudo apt-get install vim-gtk 问题记录 删除内核时 用uname -a先看看当前的内核 不要删了当前内核 挂起后wifi无法连接 1sudo service network-manager restart 重启网卡若失效，只能重启电脑了 在中文输入法时数字,英文间隔变大,检查是否处于全角字符状态 windows 和ubuntu 下时间不一致 Ubuntu中不使用UTC时间，而启用本地时间 编辑 /etc/default/rcS 把其中的内容“UTC=yes”改成“UTC=no“，保存后重启系统就可以了。 或者 1sudo timedatectl set-local-rtc 1 常用备忘命令 删除软件 1sudo apt-get purge oracle-java8-installer ssh登陆远程例子： 1ssh root@192.168.199.1 -p 1022 jobs 查看当前session创建的所有任务.包括 ctrl Z挂起任务 fg +对应的任务号 将任务调到前端 在用ctrl C停止任务.bg+任务号 让进程在后台继续运行。 可以通过文件系统自带的connect to server查看远程系统的文本 多种协议： sftp://addressftp://smb:// 快捷键Ctril+alt+t 在home启动终端ctrl+H组合键使目录中的隐藏文件显示出来]]></content>
+      <categories>
+        <category>Ubuntu</category>
+      </categories>
+      <tags>
+        <tag>装机</tag>
+        <tag>备忘</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Fieldcode]]></title>
+    <url>%2F2018%2F05%2F16%2FFieldcode%2F</url>
+    <content type="text"><![CDATA[需求描述毕业论文格式要求大标题采用“第一章”的汉字多级标题格式，而对于公式，图，表等标号需要按章节编号，如1.1 2.3.3等。如果直接使用题注进行标注会产生“一.1”的效果。对此要使用自动标号必须的用到word里域代码的相关知识。 此外域代码还能在表格中像excel中用引用相对位置进行计算，使表格填写更加高效。然而网上相关资料着实是少，官方文档缺少实例，故写本文做一个域代码的学习记录。 系统环境win10， word2016 语法说明域代码出现在大括号 ( { } ) 内。其中{ }不是用键盘上的{ }输入的，而是按Ctrl+F9。形式如{ 域名称 指令 可选开关 }。不同的命令可以在参考资料3中找到。 域代码决定域中显示的内容。计算域代码后文档中显示的为域结果。要在查看域代码和域代码结果之间切换，请按 Alt+F9。注意： 每次输入完一条命令后切记要Ctrl+A, F9来更新全文域，不然很容易出现显示为空或着错误的情况。 在输入命令时要注意符号是否是英文，中文字符可能造成语法错误。 要实现自动标号和表格相对位置主要是利用 Seq域。 Seq域实现公式标号语法： { SEQ 标识符 [书签 ] [开关 ] }标识符可以理解为自定义的变量名。默认从1开始计数，随后每使用一次值自增1.比如在第一张的标题后面输入{ SEQ chap}。此时即创造了值为1的变量chap。在第二章标题后面同样输入{ SEQ chap}，此时chap自增为2。然而我们在标题出不需要阿拉伯标号，故使用开关\h将其隐藏。最终在标题后输入：{ SEQ chap \h}在需要用到的章节标号处使用\c，表示重复前边最近的序列号。而对于公式或图标的(章节-公式号）的标记形式，只需要对公式、图、表分别创建新的seq变量来计数即可。比如最终公式标号的域代码可以写为：( { SEQ chap \c }-{ SEQ equ } ) 然而对于新的章节公式要重新标号，此时就要用\r n 将变量重置为n这个指定的数字，缺省n时默认为1。 例如，{ SEQ figure \r 3 } 从 3 开始图表编号。故只需要在新的章节任意一个早于标号的地方，比如标题处，输入域代码重置即可。以上述公式标号变量的equ为例，在标题处输入{ SEQ equ \r \h}即可。 还没有弄图床，全是文字略显抽象，具体表现效果可以参照参考资料2 表格实现相对位置计算word中的表格不能象Excel一样实现相对引用。对于大量的表格计算，常规的做法是先写一个公式，然后复制到其他单元格，最后再逐个修改。而seq域可以实现自增，实现一个公式完成同一种运算。 思路假设有表格：(切记空一行否者无法正确渲染出表格) 特征 d1 d2 d3 sum a 1 2 3 x b 1 2 3 c 1 2 3 avg y 求x：一般公式写成 {：= sum(B2:D2)}不同行之间的区别在于序号，故可以用seq变量来实现自增。由于加入了域代码，要用quote来实现。且从2开始计算，一种方法时对变量加1： { ={ quote “sum(B{ ={ seq Col_A }+1 }:D{ ={ seq Col_A \c}+1})” } } 求y：一般公式写成 {：= average(B2:B4)}不同列之间字母不同，可以用seq的*alphabetic开关，把数字转化为字母。此时无法通过先加1在转为字母实现从B开始计算，只能通过表头先写变量{ seq Row_A \r 1 }解决。 { ={ quote “average({ seq Row_A *alphabetic }2:{ seq Row_A \r *alphabetic }4)” } } 参考资料 含章节号的题注编号以阿拉伯数字显示 文1的完善 office 域代码的官方文档 office word表格中使用公式的官方文档 如何实现用域对Word表格的相对引用和自动计算？]]></content>
+      <categories>
+        <category>windows</category>
+      </categories>
+      <tags>
+        <tag>word</tag>
+        <tag>域代码</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[毕业]]></title>
+    <url>%2F2018%2F05%2F12%2F%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1%2F</url>
+    <content type="text"><![CDATA[记录琐碎事项 档案对于留学生去向： 档案转回生源地人事档案管理部门 档案转回留学服务中心； 暂缓就业 2年 毕业当年的7月1号至两年后的6月30号 毕业生的档案由省高校毕业生就业指导中心保管（毕业生的党员材料由所在学院保管） ，户口托管在学校保卫处（入学时未迁入学校的户口保留在原籍 暂缓就业的“弊”： 暂缓就业期限内,如果毕业生需要办理与就业、升学无关的证明(如失业证、未婚证、流动人口婚育证等),必须先解除暂缓就业协议,办理把档案户口转回生源地的有关手续,再到生源地办理所需要的证明; 暂缓就业期间不能计算工龄及办理职称的评审,缺失社会保险,医疗保险； 对于生源地和就读大学地区一致的情况，选择回生源地和挂靠当地人才市场没有区别。最后选择将档案存放在广州市高校毕业生就业指导中心 毕业设计中期检查毕业论文和课程大作业的区别在于课程大作业更多的关注作品本身有没实现原本的需求,而论文关注的重点是在完成项目的时候选取框架,算法的过程,重点比较不同方法的适用场景,本身的优劣.眼光更多的放在方法层面上.]]></content>
+      <categories>
+        <category>杂记</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello Hexo and Next!]]></title>
+    <url>%2F2018%2F05%2F09%2Fhellohexoandnext%2F</url>
+    <content type="text"><![CDATA[喜欢写Blog的人，会经历三个阶段:第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。 by 阮一峰 为什么要建站 记录自己的学习过程 面试的时候增加竞争力 前端练手 大四以前一直被课业占满了，课本永远看不完，资料永远有下一篇。blog只能草草记录在csdn上。老实说，csdn等网上博客足够满足日常记录的需求。然而作为一个程序员，怎么能容忍一个不可以定制化的blog呢！一个完全属于自己的网站才是理想目标。大二第一次了解到GitHub Page的时候，被jekyll和ruby劝退了。而如今Hexo+Next教程已经丰富只需要对着文档进行傻瓜式操作，技术门槛无限降低。网上有很多Next的自定义教程，我就不重复造轮子了，在这里记录一下本站参考的教程。 注意很多教程由于时间的原因已被集成到Next本身，在配置前先在主题配置文件中搜对应的关键字往往能节省很多工作 * 官方教程 高度个性化配置 blog版本控制该文yml有误，没有升级node，造成hexo无法安装。在没找到下文前，想过通过脚本实现把blog更新且部署网页。 使用AppVeyor持续集成你的Hexo博客 ! 作为一个blog，最重要的还是内容。准备陆续整理一下csdn博客里的博文搬运到此。 希望这篇能成为一个好的开端！2018-9-18 update： 换新电脑后才发现当初没有把具体过程记录下来是很愚蠢的。等于又要重新找一遍当初看过的资料。时间精力重复消耗。最好记录下来做了些什么，迁移到新环境就轻松点。 hexo for mac安装 nvm curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash Once nvm is installed, restart the terminal and run the following command to install Node.js: $ nvm install stable Once all the requirements are installed, you can install Hexo with npm:npm install -g hexo-cli 对每一个hexo所在的文件夹都需要装hexo和server：npm install hexo –savenpm install hexo-server –save 启动服务器：hexo server 待做 博客提交百度谷歌收录 seo [-] 七牛图床 标签页变化js 建站日志 中英文版本切换 用数字显示阅读进度 文章之间的分割线 引用方式备忘 作者 2018-10-08 肉身翻墙后发现了很多做得很棒的blog，勾起了我美化站点的欲望。 大佬的blogs：reuixiydiygod 在大佬网站中的友链又可以找到很多很棒的blogger。 希望了解静态网页可以实现的效果，首先需要了解什么是静态网页。静态网页不用访问数据库，本身就是一个完整可以显示的网页。静态网页使用语言：HTML动态网页使用语言：HTML+ASP或HTML+PHP或HTML+JSP等 静态网页的特点简要归纳如下：（1）静态网页每个网页都有一个固定的URL，且网 页URL以.htm、.html、.shtml等常见形式为后缀，而不含“？”；（2）网页内容一经发布到网站服务器上，无论是否有用户访问，每个静态网页都是保存在网站服务器上的，每个网页都是一个独立的文件；（3）静态网页的内容相对稳定，因此容易被搜索引擎检索；（4）静态网页没有数据库的支持，网站信息量很大时，完全依靠静态网页制作方式在网站制作和维护方面工作量较大，比较困难；（5）静态网页的交互性较差，在功能方面有较大的限制 。由于动态网页静态化的技术，一般网页前台的文件都是以htm、htm、shtml结尾。此类网站有后台，有数据库，前台页面与数据库没有任何交互的行为，此类网站与静态网站无异。可以视为静态网站。 当网页数量巨大时会造成较大的存储压力。 即可以修改next的模板来实现我任何需求。]]></content>
+      <categories>
+        <category>杂记</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>next</tag>
+      </tags>
+  </entry>
+</search>
